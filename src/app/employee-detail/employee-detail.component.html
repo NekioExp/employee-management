@@ -1,0 +1,38 @@
+<form [formGroup]="employeeForm" class="form-container">
+  <mat-form-field>
+    <mat-label for="name">Name</mat-label>
+    <input type="text" matInput formControlName="name" required minlength="3" maxlength="20">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="surname">Surname</mat-label>
+    <input type="text" matInput formControlName="surname" required minlength="3" maxlength="20">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Birthdate</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="birthdate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>User Role</mat-label>
+    <mat-select formControlName="position">
+      <mat-option value="Junior">Junior</mat-option>
+      <mat-option value="Senior">Senior</mat-option>
+      <mat-option value="Other">Other</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="employeeForm?.get('position')?.value === 'Other'">
+    <mat-form-field>
+      <mat-label for="otherPosition">Specify Position</mat-label>
+      <input type="text" matInput id="otherPosition" required formControlName="otherPosition">
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button [disabled]="employeeForm.pristine || !employeeForm.valid || compareData()" color="primary"
+    (click)="saveEmployee()">Save</button>
+</form>

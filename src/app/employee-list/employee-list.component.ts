@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { EmployeeInterface } from '../interfaces/employee.interface';
 import { AgePipe } from '../pipes/age.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',
@@ -16,7 +17,7 @@ export class EmployeeListComponent {
   searchTerm: string = '';
   role: string = 'User';
 
-  displayedColumns: string[] = ['name', 'surname', 'birthdate'];
+  displayedColumns: string[] = ['name', 'surname', 'birthdate', 'details'];
   dataSource: EmployeeInterface[] = [
     { name: 'John Doe', surname: 'Doe', birthdate: new Date('1980-10-04') },
     { name: 'Jane Doe', surname: 'Smith', birthdate: new Date('1985-01-23') },
@@ -25,7 +26,7 @@ export class EmployeeListComponent {
     { name: 'David Smith', surname: 'Davis', birthdate: new Date('2000-07-13') },
   ];
 
-  constructor() {}
+  constructor(private router: Router) { }
 
   filterEmployees() {
     this.filteredEmployees = this.employees.filter(employee => {
@@ -34,12 +35,8 @@ export class EmployeeListComponent {
     });
   }
 
-  toggleEditMode() {
-    this.role = this.role === 'User' ? 'Admin' : 'User';
-  }
-
-  getAge(employee: EmployeeInterface) {
-    return new Date().getFullYear() - new Date(employee.birthdate).getFullYear();
+  viewDetails(row: EmployeeInterface) {
+    this.router.navigate(['/details']);
   }
 
 }
