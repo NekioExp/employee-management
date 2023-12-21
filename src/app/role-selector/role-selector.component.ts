@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RoleInterface } from '../interfaces/role.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-role-selector',
@@ -23,11 +24,15 @@ import { RoleInterface } from '../interfaces/role.interface';
 })
 export class RoleSelectorComponent {
   public roleList: RoleInterface[];
-  public selectedRole: string | null;
+  public selectedRole: RoleInterface | null;
 
-  constructor() {
+  constructor(private router: Router) {
     this.roleList = [{value: 'user', label: 'User'}, {value: 'admin', label: 'Admin'}];
     this.selectedRole = null;
+  }
+
+  goForward() {
+    this.router.navigate(['/employee-list']);
   }
 
 }
